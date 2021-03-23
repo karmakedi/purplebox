@@ -1,0 +1,38 @@
+#! /bin/sh
+
+gap=30
+PANEL_HEIGHT=35
+gap2=1
+
+export gap
+export gap2
+
+bspc config window_gap $gap2;
+bspc config top_padding $gap
+bspc config left_padding -$gap2
+bspc config right_padding -$gap2
+bspc config bottom_padding -$gap2
+
+
+pgrep -x sxhkd > /dev/null || sxhkd &
+
+bspc monitor DVI-D-0 -d  1 2 3 4 5
+bspc monitor HDMI-0 -d 6 7 8 9 10
+
+bspc config border_width         2
+bspc config window_gap          12
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+#bspc rule -a Gimp desktop='^8' state=floating follow=on
+bspc rule -a Chromium desktop='^2'
+bspc rule -a mplayer2 state=floating
+bspc rule -a Kupfer.py focus=on
+bspc rule -a Screenkey manage=off
+
+$HOME/.config/polybar/launch.sh
+feh --bg-fill ~/wallpapers/working/caps_bg.jpg
+picom
+xclip
